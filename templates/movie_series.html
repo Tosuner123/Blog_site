@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% load static %}
+{% block navbar_content %}Film/Dizi{% endblock navbar_content %}
+{% block content %}
+<section class="gallery" id="portfolio">
+    
+  <div class="container-fluid ">
+    
+    <h1 class="section-heading">Film/Dizi</h1>
+    <h5 class="thin"><em>Blogumuzdaki zengin içeriklerle bilgi dolu bir dünyaya adım atın ve keşfetmeye başlayın!</em></h5>
+    <div class="loading_container">
+      <div id="loading" class="spinner-square">
+        <div class="square-1 square"></div>
+        <div class="square-2 square"></div>
+        <div class="square-3 square"></div>
+      </div>
+    </div>
+    <div class="row card-container  gallery-items">
+      {% for blog_content in blogs reversed  %}
+        <div class="col-sm-12 col-md-6 col-lg-3 item">
+          <div class="port-box">
+          
+            <div class="card card-2">
+              <div class="card-img"></div>
+              <a data-toggle="modal" data-target="#port-modal-{{ blog_content.id }}" href="" class="card-link">
+                <div class="card-img-hovered" style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('{{ blog_content.card_image.url }}');"></div>
+              </a>
+              <div class="card-info">
+                <div class="card-about">
+                  <a class="card-tag" data-category="{{ blog_content.kategori }}">{{ blog_content.kategori }}</a>
+                <div class="card-time">{{ blog_content.created_date }}</div>
+                </div>  
+                <a class="card-title-link" data-toggle="modal" data-target="#port-modal-{{ blog_content.id }}" href=""><h1 class="card-title">{{ blog_content.baslik }}</h1></a>
+                <div class="card-creator">by <a href="">{{ blog_content.yazar }}</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        
+        {% endfor %}
+      {% for blog_content in blogs %}
+      <div id="portfolio-modals">
+        <div class="modal fade" id="port-modal-{{ blog_content.id }}" tabindex="-1" role="dialog" aria-labelledby="Design MasonorousFX" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header row">
+                <div class="col-xs-12 col-md-4 modal-headings">
+                  <div class="col-span-12">
+                    <div class="post-header my-3 flex align-items-center d-grid gap-3  ">
+                      {% if blog_content.profile_image %}
+                          <img src="{{ blog_content.profile_image.url }}" class="w-25 rounded-full" alt="" />
+                      {% else %}
+                          <p>Profil resmi yok</p>
+                      {% endif %}
+                      <div class="name_div w-25 h-25">
+                        <span class="name d-block text-center">{{ blog_content.yazar }}</span>
+                      </div>
+                     
+                    </div>
+                  </div>
+                <h4 class="modal-title">{{ blog_content.kategori }}</h4>
+                
+                <p class="name_posted">{{ blog_content.yazar }}  tarafından oluşturuldu</p>
+                </div>
+                <div class="col-xs-12 col-md-8">
+                  <p class="modal-description">{{ blog_content.icerik_info }}</p>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+                </div>
+                
+               
+                  
+                </div>
+              </div>
+              <div class="modal-body">
+                
+                 
+                 <div class="entry">
+                  <div class="blog-content">
+                    <div>
+                      <div class="blog-date">{{ blog_content.created_date }}</div>
+                      <h1 class="blog_read_title">{{ blog_content.baslik }}</h1>
+                    </div>
+                    
+                  </div>  
+                  
+                  <div class="blog-content">
+                    {{ blog_content.icerik|safe }}
+                    {% if blog_content.image %}
+                        <img class="blog-img" src="{{ blog_content.image.url }}"></img>
+                  {% endif %}
+                  
+                 </div>
+                  
+                
+              </div>
+            </div>
+              <div class="modal-footer">
+                <a href="#"><button type="button" class="btn btn-primary">Sonraki Blog</button></a>
+        
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+  
+      
+        {% endfor %}
+      
+     
+        
+        
+        
+        
+       
+  
+  
+  
+        <!-- <div class="col-sm-12 col-md-6 col-lg-3 item">
+          <div class="port-box">
+          
+            <div class="card card-3">
+              <div class="card-img"></div>
+              <a href="" class="card-link">
+                <div class="card-img-hovered"></div>
+              </a>
+              <div class="card-info">
+                <div class="card-about">
+                  <a class="card-tag tag-deals">Deals</a>
+                <div class="card-time">5/27/2018</div>
+                </div>
+                <a class="card-title-link" data-toggle="modal" data-target="#port-modal-{{ blog_content.id }}" href=""><h1 class="card-title">Samsung laptops is exploding again</h1></a>
+                <div class="card-creator">by <a href="">Timur Mirzoyev</a></div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        
+        
+        
+      </div>
+      
+    <!--  Pagination-->
+      
+      <br/>
+      
+      <div class="pagination">
+        <div class="wrapper">
+          <div class="prev cta">Önceki</div>
+        </div>
+              
+        <div class="page">Sayfa <span class="page-num">{{ blogs.number }}</span></div>
+        
+        <div class="wrapper">
+          <div class="next cta">Sonraki</div>
+         
+        </div>
+              
+          </div>
+      
+      <br/>
+      
+    </div>
+    
+  </section>
+  
+  
+  
+  
+   
+        
+  
+  
+  
+  {% endblock content %}
+  
+    
+    
+  {% block footer_blog %}
+  <div class="col-md-4 col-lg-4">
+    <div class="footer-blog">
+      <h3>En son blog</h3>
+      {% for blog_content in footer_blog  %}
+      <div>
+        
+        <a href="" data-toggle="modal" data-target="#port-modal-{{ blog_content.id }}" >{{ blog_content.baslik }}</a>
+        <p><i class="fa fa-time"></i>{{ blog_content.created_date }}</p>
+      
+      </div>
+      
+      
+      
+      
+      {% endfor %}
+      
+     
+     
+      
+    </div>
+  </div>
+  {% endblock footer_blog %}
+
+  
+  
+  </body>
+  </html>
+  </body>
+  </html>
+
+  
+ 
