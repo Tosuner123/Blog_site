@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keşif Defteri</title>
+    <script src="https://use.fontawesome.com/6046657636.js"></script>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+<link rel="stylesheet" href="{% static './style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Song+Myung" rel="stylesheet">
+<link rel="icon" href="{% static 'Keşif_Defteri.png' %}">
+<link href="https://fonts.googleapis.com/css2?family=Trispace:wght@200&display=swap" rel="stylesheet">
+</head>
+<body data-spy="scroll" data-target=".spy-class" data-offset="70">
+    <!-- navbar -->
+    <nav class="navbar navbar-toggleable-md navbar-inverse stickynav">
+      
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          
+          <span class="navbar-toggler-icon"></span>
+          
+        </button>
+  
+        <div id="navbar-logo">
+          <a class="navbar-brand" href="{% url 'index' %}"><img src="https://images.cooltext.com/5665833.png"/></a>
+          
+        </div>
+  
+        <div class="collapse navbar-collapse justify-content-center spy-class" id="navbarNavAltMarkup">
+          
+          <ul class="nav navbar-nav">
+            <li><a class="nav-item nav-link active" href="{% url 'index' %}">Anasayfa</a></li>
+            <li><a class="nav-item nav-link " href="#portfolio">{% block navbar_content %}İçerikler{% endblock %}</a></li>
+            <li><a class="nav-item nav-link" href="#info">İletişim</a></li>
+          </ul>
+          
+        </div>
+        
+        <div class="collapse navbar-collapse justify-content-end" id="navbar-social-nav">
+          
+          <ul class="nav navbar-nav">
+            <li><div id="saat" class="nav-item nav-link">00:00:00</div></li>
+            <li><a class="nav-item nav-link" href=""><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+            <li><a class="nav-item nav-link" href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a class="nav-item nav-link" href="https://github.com/Tosuner123"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+            
+          </ul>
+          
+        </div>
+        
+      </nav>
+    {% block content %}
+    {% endblock content %}
+    <div id="info" class="footer">
+        <div class="container">
+          <div class="row">
+            {% block footer_blog %}
+            <div class="col-md-4 col-lg-4">
+              <div class="footer-blog">
+                <h3>En son blog</h3>
+                {% for blog_content in spor_icerikler %}
+                <div>
+                  
+                  <a href="" data-toggle="modal" data-target="#port-modal-{{ blog_content.id }}" >{{ blog_content.baslik }}</a>
+                  <p><i class="fa fa-time"></i>{{ blog_content.created_date }}</p>
+                
+                </div>
+                
+                
+                {% endfor %}
+                
+                {% for blog_content in yazilim_icerikler %}
+                
+                <div>
+                  <a href=""  data-toggle="modal" data-target="#port-modal-{{ blog_content.id }}">{{ blog_content.baslik }}</a>
+                  <p><i class="fa fa-time"></i>{{ blog_content.created_date }}</p>
+                </div>
+
+                {% endfor %}
+                {% for blog_content in kitap_icerikler %}
+
+                <div >
+                  <a href="" data-toggle="modal" data-target="#port-modal-{{ blog_content.id }}">{{ blog_content.baslik }}</a>
+                  <p><i class="fa fa-time"></i>{{ blog_content.created_date }}</p>
+                </div>
+
+                {% endfor %}
+                
+              </div>
+            </div>
+            {% endblock footer_blog %}
+          
+            <div class="col-md-4 col-lg-4">
+                <div class="footer_category">
+                  <h3>Katagoriler</h3>
+                  <div>
+                    <a href="{% url 'software' %}" class="content_title_link ">
+                      <p class="header-subhead">Yazılım</p>
+                    </a>
+                      
+                  </div>
+                  <div>
+                    <a href="{% url 'spor' %}" class="content_title_link ">
+                      <p class="header-subhead">Spor</p>
+                    </a>
+                  </div>
+                  <div>
+                    <a href="{% url 'book' %}" class="content_title_link ">
+                      <p class="header-subhead">Kitap</p>
+                    </a>
+                  </div>
+                  <div>
+                    <a href="{% url 'movie_series' %}" class="content_title_link ">
+                      <p class="header-subhead">Film/Dizi</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+           
+            <div class="col-md-4 col-lg-4">
+              <div class="footer-newsletter">
+                <h3>İletişim</h3>
+                <form class="form" method="post" action="{% url 'footer_info' %}">
+                  {% csrf_token %}
+                  <input class="form-control" type="text" name="name" placeholder="İsminiz"  required>
+                  <input class="form-control" type="email" name="email" placeholder="Email Adresiniz"  required>
+                  <input class="form-control" type="text" name="note" placeholder="Not Bırakın"  required>
+                  <button type="submit" class="btn">Gönder</button>
+               </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="footer-contact">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <h4>Email Adresimiz</h4>
+                <p>burakyigitdal@gmail.com</p>
+              </div>
+              <div class="col-md-4">
+                <h4>Biz Kimiz ?</h4>
+                <p>Keşif defteri, sizin için ilginç ve yararlı olabilecek konuları araştıran ve paylaşan bir blog sitesidir. Burada Yazılım, Film/Dizi, Kitap gibi çeşitli alanlardan yazılar bulabilirsiniz. Keşif defteri, meraklı ve öğrenmeye açık okuyucular için hazırlanmış bir platformdur. Siz de keşfetmeye hazır mısınız?</p>
+              </div>
+              <div class="col-md-4">
+                <h4>Sosyal Medya</h4>
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <!-- <a href=""><i class="fab fa-facebook-f"></i></a> -->
+                <!-- <a href=""><i class="fab fa-youtube"></i></a> -->
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-md-12 col-lg-12 text-center">
+                <div class="copy-text">
+                  <p>&copy; <a href="#">Keşif Defteri</a>. All Rights Reserved.</p>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src='https://code.jquery.com/jquery-3.1.1.slim.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
+<script  src="{% static './script.js' %}"></script>
+<script src="https://kit.fontawesome.com/8c025b47e7.js" crossorigin="anonymous"></script>
+<script src="{% static 'quotes.js' %}"></script>
+<script src="{% static 'pagination.js' %}"></script>
+
+    
+    </body>
+      </html>
+        
